@@ -1,21 +1,21 @@
 name: Terraform CI/CD
 
 on:
-  push:
-    branches:
-      - staging
   pull_request:
     branches:
       - prod
+    types:
+      - closed
 
 jobs:
   terraform:
-    name: Terraform Plan & Apply
+    if: github.event.pull_request.merged == true && github.event.pull_request.head.ref == 'staging'
+    name: Terraform Apply on Prod Merge
     runs-on: ubuntu-latest
 
     defaults:
       run:
-        working-directory: environments/dev
+        working-directory: environments/prod
 
     steps:
       - name: Checkout Code
@@ -34,9 +34,6 @@ jobs:
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: us-east-1
 
-      - name: Terraform Format
-        run: terraform fmt -check
-
       - name: Terraform Init
         run: terraform init
 
@@ -47,5 +44,4 @@ jobs:
         run: terraform plan
 
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/staging'
         run: terraform apply -auto-approve
