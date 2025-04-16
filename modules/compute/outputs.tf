@@ -3,11 +3,6 @@ output "bastion_security_group_id" {
   value       = aws_security_group.bastion.id
 }
 
-output "database_security_group_id" {
-  description = "Database Security Group ID"
-  value       = aws_security_group.database.id
-}
-
 output "public_web_instance_ids" {
   description = "List of Public Web Server Instance IDs"
   value       = aws_instance.public_web[*].id  # Changed from web to public_web
@@ -18,9 +13,9 @@ output "bastion_public_ip" {
   value       = aws_instance.bastion.public_ip
 }
 
-output "database_private_ip" {
-  description = "Database Server Private IP Address"
-  value       = aws_instance.database.private_ip
+output "vm6_private_ip" {
+  description = "vm6 Server Private IP Address"
+  value       = aws_instance.vm6.private_ip
 }
 
 output "public_web_sg_id" {
