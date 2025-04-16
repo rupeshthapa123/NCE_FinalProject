@@ -29,8 +29,8 @@ module "alb_asg" {
   group_name    = var.group_name
   vpc_id        = module.network.vpc_id
   public_subnet_ids = [
-    module.network.public_subnet_ids[0],  # Subnet 1 (VM1)
-    module.network.public_subnet_ids[2]   # Subnet 3 (VM3)
+    module.network.public_subnet_ids[0],  # Subnet1 (VM1)
+    module.network.public_subnet_ids[2]   # Subnet3 (VM3)
   ]
   web_security_group_id = module.compute.public_web_sg_id
   alb_security_group_id = module.network.alb_security_group_id
