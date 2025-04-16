@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket         = "acs-project-dev2025"
+    bucket         = "acs-project-dev"
     key            = "terraform.tfstate"
     region         = "us-east-1"
   }
