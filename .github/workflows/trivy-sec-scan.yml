@@ -27,7 +27,7 @@ jobs:
         with:
           scan-type: 'fs'
           scan-ref: '.'
-          scanners: 'config'
+          scanners: 'misconfig'
           severity: 'HIGH,CRITICAL'
           exit-code: '0'
           format: 'table'
@@ -37,8 +37,8 @@ jobs:
         uses: aquasecurity/trivy-action@0.20.0
         with:
           scan-type: 'fs'
-          scan-ref: './terraform'
-          scanners: 'config'
+          scan-ref: '.'
+          scanners: 'misconfig'
           severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
           exit-code: '0'
           format: 'sarif'
