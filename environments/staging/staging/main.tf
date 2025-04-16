@@ -12,8 +12,8 @@ module "compute" {
   group_name      = var.group_name
   vpc_id          = module.network.vpc_id
   public_subnet_ids = [
-    module.network.public_subnet_ids[1],  # Subnet 2 (VM2 - Bastion)
-    module.network.public_subnet_ids[3]   # Subnet 4 (VM4)
+    module.network.public_subnet_ids[1],  #Subnet 2 (VM2 - Bastion)
+    module.network.public_subnet_ids[3]   #Subnet 4 (VM4)
   ]
   private_subnet_ids = module.network.private_subnet_ids
   instance_type   = var.web_instance_type
