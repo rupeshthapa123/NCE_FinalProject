@@ -1,29 +1,28 @@
 variable "environment" {
-  description = "Environment name (Dev, Staging, Prod)"
+  description = "Environment name"
   type        = string
+  default     = "Prod"
 }
 
 variable "group_name" {
   description = "Group name for resource naming"
   type        = string
+  default     = "Group1"
 }
 
-variable "vpc_id" {
-  description = "VPC ID from network module"
+variable "project_name" {
+  description = "Project name for tagging"
   type        = string
+  default     = "ACS730-Final"
 }
 
-variable "public_subnet_ids" {
-  description = "List of public subnet IDs from network module"
-  type        = list(string)
+variable "vpc_cidr" {
+  description = "VPC CIDR block"
+  type        = string
+  default     = "10.1.0.0/16"
 }
 
-variable "private_subnet_ids" {
-  description = "List of private subnet IDs from network module"
-  type        = list(string)
-}
-
-variable "instance_type" {
+variable "web_instance_type" {
   description = "EC2 instance type for web servers"
   type        = string
   default     = "t2.micro"
@@ -36,7 +35,7 @@ variable "key_name" {
 }
 
 variable "ssh_access_cidr" {
-  description = "CIDR block allowed for SSH access"
+  description = "Allowed SSH access CIDR block"
   type        = string
   default     = "0.0.0.0/0"
 }
@@ -44,9 +43,8 @@ variable "ssh_access_cidr" {
 variable "tags" {
   description = "Additional tags for resources"
   type        = map(string)
-  default     = {}
-}
-variable "alb_security_group_id" {
-  description = "ALB Security Group ID"
-  type        = string
+  default     = {
+    CostCenter  = "ACS730"
+    Application = "WebApp"
+  }
 }

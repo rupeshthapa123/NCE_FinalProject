@@ -1,0 +1,51 @@
+name: Trivy Scan - Terraform IaC (Report Only) # Renamed slightly for clarity
+
+on:
+  push:
+    branches: [ "staging" ]
+  pull_request:
+    branches: [ "staging" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+  actions: read
+
+jobs:
+  trivy_scan:
+    name: Trivy IaC Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Trivy scanner for logs (Report HIGH/CRITICAL)
+        id: trivy_scan_log
+        uses: aquasecurity/trivy-action@0.20.0
+        with:
+          scan-type: 'fs'
+          scan-ref: './terraform'
+          scanners: 'config'
+          severity: 'HIGH,CRITICAL'
+          exit-code: '0'
+          format: 'table'
+
+      - name: Generate Trivy SARIF report (All Severities)
+        if: always()
+        uses: aquasecurity/trivy-action@0.20.0
+        with:
+          scan-type: 'fs'
+          scan-ref: './terraform'
+          scanners: 'config'
+          severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
+          exit-code: '0'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+
+      - name: Upload Trivy SARIF report to GitHub Security tab
+        if: always() && (github.event_name == 'pull_request' || (github.event_name == 'push' && github.ref == 'refs/heads/terraform'))
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: 'trivy-results.sarif'
