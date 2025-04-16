@@ -1,6 +1,7 @@
 # Local .terraform directories
 .terraform/
-ansible/
+environmets/
+modules/
 # Terraform state files
 *.tfstate
 *.tfstate.*
